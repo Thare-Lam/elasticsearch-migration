@@ -12,7 +12,7 @@ A tool to migration elasticsearch index from one cluster to another cluster
 
 # Conf
 
-```json
+```
 {
   "source": {
     "host": "source_host", # source index's es host
