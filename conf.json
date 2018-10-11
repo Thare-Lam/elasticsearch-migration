@@ -1,0 +1,15 @@
+{
+  "source": {
+    "host": "source_host",
+    "index": "source_index",
+    "type": "source_type",
+    "size_per_search": 500,
+    "scroll_alive": "1m"
+  },
+  "target": {
+    "host": "target_host",
+    "index": "target_index",
+    "type": "target_type"
+  },
+  "copy_mapping": true
+}
