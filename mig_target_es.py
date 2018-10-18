@@ -21,7 +21,7 @@ class MigTargetEs(MigEs):
                     '_op_type': 'index',
                     '_index': self.index,
                     '_type': self.doc_type,
-                    '_id': doc['_source']['id'],
+                    '_id': doc['_id'],
                     '_source': doc['_source']
                 }
 
