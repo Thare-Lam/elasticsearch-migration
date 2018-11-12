@@ -15,17 +15,42 @@ class MigTargetEs(MigEs):
         self.es.indices.put_mapping(index=self.index, doc_type=self.doc_type, body=mapping)
 
     def bulk_index(self, docs, executor, callback):
-        def gen_data():
-            for doc in docs:
-                yield {
-                    '_op_type': 'index',
-                    '_index': self.index,
-                    '_type': self.doc_type,
-                    '_id': doc['_id'],
-                    '_source': doc['_source']
-                }
+        executor.submit(self.do_bulk_index, docs, callback)
 
-        def do_bulk_index():
-            resp = bulk(self.es, gen_data())
-            callback(resp[0])
-        executor.submit(do_bulk_index, )
+    def do_bulk_index(self, docs, callback):
+        resp = bulk(self.es, self.gen_data(docs))
+        callback(resp[0])
+
+    def gen_data(self, docs):
+        for doc in docs:
+            source_id = doc['_id']
+            source_source = doc['_source']
+            handled_id = self.handle_id(source_id, source_source)
+            handled_source = self.handle_source(source_id, source_source)
+
+            if handled_id is None or handled_source is None:
+                continue
+
+            yield {
+                '_op_type': 'index',
+                '_index': self.index,
+                '_type': self.doc_type,
+                '_id': handled_id,
+                '_source': handled_source
+            }
+
+    def handle_id(self, id, source):
+        """
+        handle id
+        :param id: source id
+        :return: target id. If return None, this doc will be ignored
+        """
+        return id
+
+    def handle_source(self, id, source):
+        """
+        handle source
+        :param source: source source
+        :return: target source. If return None, this doc will be ignored
+        """
+        return source
