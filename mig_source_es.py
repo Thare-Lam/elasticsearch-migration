@@ -7,6 +7,7 @@ class MigSourceEs(MigEs):
         super().__init__(conf)
         self.size_per_search = conf['size_per_search']
         self.scroll_alive = conf['scroll_alive']
+        self.dsl = conf['dsl']
 
     def get_mapping(self):
         mapping = self.es.indices.get_mapping(index=self.index, doc_type=self.doc_type)
@@ -14,7 +15,7 @@ class MigSourceEs(MigEs):
 
     def init_scroll(self):
         return self.es.search(index=self.index, doc_type=self.doc_type, scroll=self.scroll_alive,
-                              size=self.size_per_search, sort=['_doc'])
+                              size=self.size_per_search, sort=['_doc'], body=self.dsl)
 
     def scroll(self, scroll_id):
         return self.es.scroll(scroll_id=scroll_id, scroll=self.scroll_alive)

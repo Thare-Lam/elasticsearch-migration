@@ -4,7 +4,8 @@
     "index": "source_index",
     "type": "source_type",
     "size_per_search": 500,
-    "scroll_alive": "1m"
+    "scroll_alive": "1m",
+    "dsl": {}
   },
   "target": {
     "host": "target_host",
