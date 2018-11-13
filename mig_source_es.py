@@ -5,9 +5,9 @@ class MigSourceEs(MigEs):
 
     def __init__(self, conf):
         super().__init__(conf)
-        self.size_per_search = conf['size_per_handle']
-        self.scroll_alive = conf['scroll_alive']
-        self.dsl = conf['dsl']
+        self.size_per_search = conf.get('size_per_handle', 500)
+        self.scroll_alive = conf.get('scroll_alive', '1m')
+        self.dsl = conf.get('dsl', {})
 
     def get_mapping(self):
         mapping = self.es.indices.get_mapping(index=self.index, doc_type=self.doc_type)

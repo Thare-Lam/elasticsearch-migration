@@ -6,7 +6,7 @@ class MigTargetEs(MigEs):
 
     def __init__(self, conf):
         super().__init__(conf)
-        self.index_thread_num = conf['index_thread_num']
+        self.index_thread_num = conf.get('index_thread_num', 10)
         try:
             self.es.indices.create(index=self.index)
         except:

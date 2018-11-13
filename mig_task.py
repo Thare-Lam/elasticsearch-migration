@@ -9,7 +9,7 @@ class MigTask:
     def __init__(self, conf):
         self.source_es = MigSourceEs(conf['source'])
         self.target_es = MigTargetEs(conf['target'])
-        self.copy_mapping = conf['copy_mapping']
+        self.copy_mapping = conf.get('copy_mapping', True)
         self.process_bar = None
 
     def set_process_bar(self, total):
