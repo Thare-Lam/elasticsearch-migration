@@ -24,21 +24,24 @@ class MigTargetEs(MigEs):
 
     def gen_data(self, docs):
         for doc in docs:
-            source_id = doc['_id']
-            source_source = doc['_source']
-            handled_id = self.handle_id(source_id, source_source)
-            handled_source = self.handle_source(source_id, source_source)
+            try:
+                source_id = doc['_id']
+                source_source = doc['_source']
+                handled_id = self.handle_id(source_id, source_source)
+                handled_source = self.handle_source(source_id, source_source)
 
-            if handled_id is None or handled_source is None:
-                continue
+                if handled_id is None or handled_source is None:
+                    continue
 
-            yield {
-                '_op_type': 'index',
-                '_index': self.index,
-                '_type': self.doc_type,
-                '_id': handled_id,
-                '_source': handled_source
-            }
+                yield {
+                    '_op_type': 'index',
+                    '_index': self.index,
+                    '_type': self.doc_type,
+                    '_id': handled_id,
+                    '_source': handled_source
+                }
+            except Exception as e:
+                print(e)
 
     def handle_id(self, id, source):
         """
