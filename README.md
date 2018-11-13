@@ -5,7 +5,7 @@ A tool to migration elasticsearch index from one index to another index (can be 
 
 1. modify **conf.json**
 
-   ```json
+   ```
    {
      "source": {
        "host": "source_host", # source index's es host
