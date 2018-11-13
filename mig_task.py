@@ -26,7 +26,7 @@ class MigTask:
         resp = self.source_es.init_scroll()
         self.set_process_bar(resp['hits']['total'])
 
-        with ThreadPoolExecutor(3) as executor:
+        with ThreadPoolExecutor(self.target_es.index_thread_num) as executor:
             continue_scroll, scroll_id = self.bulk_index(executor, resp)
             while continue_scroll:
                 resp = self.source_es.scroll(scroll_id)

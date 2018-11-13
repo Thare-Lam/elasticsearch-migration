@@ -6,6 +6,7 @@ class MigTargetEs(MigEs):
 
     def __init__(self, conf):
         super().__init__(conf)
+        self.index_thread_num = conf['index_thread_num']
         try:
             self.es.indices.create(index=self.index)
         except:
@@ -18,8 +19,8 @@ class MigTargetEs(MigEs):
         executor.submit(self.do_bulk_index, docs, callback)
 
     def do_bulk_index(self, docs, callback):
-        resp = bulk(self.es, self.gen_data(docs))
-        callback(resp[0])
+        bulk(self.es, self.gen_data(docs))
+        callback(len(docs))
 
     def gen_data(self, docs):
         for doc in docs:

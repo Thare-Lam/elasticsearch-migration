@@ -5,7 +5,7 @@ class MigSourceEs(MigEs):
 
     def __init__(self, conf):
         super().__init__(conf)
-        self.size_per_search = conf['size_per_search']
+        self.size_per_search = conf['size_per_handle']
         self.scroll_alive = conf['scroll_alive']
         self.dsl = conf['dsl']
 

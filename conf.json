@@ -3,14 +3,15 @@
     "host": "source_host",
     "index": "source_index",
     "type": "source_type",
-    "size_per_search": 500,
+    "size_per_handle": 500,
     "scroll_alive": "1m",
     "dsl": {}
   },
   "target": {
     "host": "target_host",
     "index": "target_index",
-    "type": "target_type"
+    "type": "target_type",
+    "index_thread_num": 10
   },
   "copy_mapping": true
 }
